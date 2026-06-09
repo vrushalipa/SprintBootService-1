@@ -6,7 +6,7 @@ pipeline {
 
   stage('Checkout') {
    steps {
-    git branch: 'main',
+    git branch: 'master',
     url: 'https://github.com/vrushalipa/SprintBootService-1.git'
    }
   }
