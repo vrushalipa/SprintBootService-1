@@ -43,6 +43,11 @@ pipeline {
 
   stage('Deploy') {
    steps {
+    sh 'whoami'
+    sh 'echo $HOM'
+    sh 'echo $KUBECONFIG'
+    sh 'aws sts get-caller-identity'
+    sh 'kubectl config current-context'
     sh 'kubectl get nodes'
     sh 'kubectl apply -f deployment.yaml'
     sh 'kubectl apply -f service.yaml'
