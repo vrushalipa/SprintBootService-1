@@ -43,16 +43,23 @@ pipeline {
 
   stage('Deploy') {
    steps {
-    sh 'whoami'
-    sh 'echo $HOM'
-    sh 'echo $KUBECONFIG'
-    sh 'aws sts get-caller-identity'
-    sh 'aws eks update-kubeconfig --region us-east-1 --name eks-cluster'
-    sh 'kubectl config current-context'
-    sh 'kubectl get nodes'
-    sh 'kubectl apply -f deployment.yaml'
-    sh 'kubectl apply -f service.yaml'
+	 withCredentials([[
+            $class: 'AmazonWebServicesCredentialsBinding',
+            credentialsId: 'aws-credentials'
+        ]]) {
+            sh '''
+            export AWS_REGION=us-east-1
+            export KUBECONFIG=/var/lib/jenkins/.kube/config
+
+            aws sts get-caller-identity
+
+            kubectl get nodes
+
+            kubectl apply -f deployment.yaml
+
+            kubectl apply -f service.yaml
+            '''
    }
   }
  }
-}
+
