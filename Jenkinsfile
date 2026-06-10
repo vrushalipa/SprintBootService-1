@@ -45,7 +45,7 @@ pipeline {
    steps {
 	 withCredentials([[
             $class: 'AmazonWebServicesCredentialsBinding',
-            credentialsId: 'aws-credentials'
+            credentialsId: 'AWS-credentials'
         ]]) {
             sh '''
             export AWS_REGION=us-east-1
