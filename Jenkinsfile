@@ -47,8 +47,6 @@ pipeline {
     sh 'echo $HOM'
     sh 'echo $KUBECONFIG'
     sh 'aws sts get-caller-identity'
-    
-# Always refresh kubeconfig for Jenkins runtime
     sh 'aws eks update-kubeconfig --region us-east-1 --name eks-cluster'
     sh 'kubectl config current-context'
     sh 'kubectl get nodes'
